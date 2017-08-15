@@ -77,7 +77,7 @@ try {
 //      }
 //
       stage ('configure .env file') {
-        withEnv(["RANCHER_ORCHESTRATION=SA", "RANCHER_VERSION=SA"]) {
+        withEnv(["RANCHER_ORCHESTRATION=SA", "RANCHER_VERSION=SA", "RANCHER_SERVER_OPERATINGSYSTEM=${RANCHER_AGENT_OPERATINGSYSTEM}"]) {
           sh "./scripts/configure.sh"
         }
       }
