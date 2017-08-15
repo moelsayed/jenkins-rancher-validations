@@ -254,17 +254,19 @@ class RancherAgents(object):
         #
         def provision_standalone(self):
                 agent_count = int(str(os.environ['RANCHER_AGENTS_COUNT']).rstrip())
+                agent_prefix = self.__agent_name_prefix()
                 try:
-                        #rancher_orch = str(os.environ['RANCHER_ORCHESTRATION']).rstrip()
                         self.__ensure_rancher_agents()
                         self.__ensure_agents_docker()
-                        #self.__ensure_rancher_agents_container()
-                        #self.__wait_on_active_agents(agent_count)
                 except RancherAgentsError as e:
                         msg = "Failed while provisioning Rancher Agents!: {}".format(str(e))
                         log_debug(msg)
                         raise RancherAgentsError(msg) from e
 
+                for agent in range(0, agent_count):
+                    agent_name = agent_prefix + str(agent)
+                    addr = ec2_node_public_ip(agent_name, region=region)
+                    log_info("Standalone Agent {}: {}".format(agent_name, addr))
                 return True
 
         #
