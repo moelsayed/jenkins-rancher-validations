@@ -77,18 +77,18 @@ try {
 //      }
 //
       stage ('configure .env file') {
-        withEnv(["RANCHER_ORCHESTRATION=SA", "RANCHER_VERSION=SA", "RANCHER_SERVER_OPERATINGSYSTEM=${RANCHER_AGENT_OPERATINGSYSTEM}"]) {
+        withEnv(["RANCHER_ORCHESTRATION=StandAlone", "RANCHER_VERSION=SA", "RANCHER_SERVER_OPERATINGSYSTEM=${RANCHER_AGENT_OPERATINGSYSTEM}"]) {
           sh "./scripts/configure.sh"
         }
       }
 
-//      stage ('deprovision Rancher Agents') {
-//        sh "docker run --rm  " +
-//          "-v jenkins_home:/var/jenkins_home " +
-//          "--env-file .env " +
-//    "rancherlabs/ci-validation-tests /bin/bash -c \'cd \"\$(pwd)\" && invoke rancher_agents.deprovision\'"
-//      }
-//
+      stage ('deprovision Rancher Agents') {
+        sh "docker run --rm  " +
+          "-v jenkins_home:/var/jenkins_home " +
+          "--env-file .env " +
+    "rancherlabs/ci-validation-tests /bin/bash -c \'cd \"\$(pwd)\" && invoke rancher_agents.deprovision\'"
+      }
+
       if ( "false" == "${PIPELINE_DEPROVISION_STOP}" ) {
       
          stage ('provision Standalone Rancher Agents') {
