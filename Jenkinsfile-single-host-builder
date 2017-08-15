@@ -1,9 +1,6 @@
 #!groovy
 
 
-// RANCHER_VERSION resolution is first via Jenkins Build Parameter RANCHER_VERSION fed in from console,
-// then from $DOCKER_TRIGGER_TAG which is sourced from the Docker Hub Jenkins plugin webhook.
-
 // Get the AWS prefix if it exists
 def aws_prefix() {
   try { if ('' != AWS_PREFIX) { return AWS_PREFIX } }
@@ -80,9 +77,9 @@ try {
 //      }
 //
       stage ('configure .env file') {
-        //withEnv(["RANCHER_VERSION=${rancher_version}"]) {
+        withEnv(["RANCHER_ORCHESTRATION=SA", "RANCHER_VERSION=SA"]) {
           sh "./scripts/configure.sh"
-        //}
+        }
       }
 
 //      stage ('deprovision Rancher Agents') {
