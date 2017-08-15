@@ -256,10 +256,19 @@ class RancherAgents(object):
                 agent_count = int(str(os.environ['RANCHER_AGENTS_COUNT']).rstrip())
                 agent_prefix = self.__agent_name_prefix()
                 region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
+                reg_command = str(os.environ['REGISTRATION_COMMAND']).rstrip()
+                agent_os = str(os.environ['RANCHER_AGENT_OPERATINGSYSTEM']).rstrip() 
+                os_settings = os_to_settings(agent_os)                               
+                ssh_user = os_settings['ssh_username']                               
 
                 try:
                         self.__ensure_rancher_agents()
                         self.__ensure_agents_docker()
+                        if reg_command:
+                            agent_name = agent_prefix + str(agent)              
+                            addr = ec2_node_public_ip(agent_name, region=region)
+                            SSH(agent_name, addr, ssh_user, reg_command)        
+
                 except RancherAgentsError as e:
                         msg = "Failed while provisioning Rancher Agents!: {}".format(str(e))
                         log_debug(msg)
