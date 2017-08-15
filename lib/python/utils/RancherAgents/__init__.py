@@ -255,6 +255,8 @@ class RancherAgents(object):
         def provision_standalone(self):
                 agent_count = int(str(os.environ['RANCHER_AGENTS_COUNT']).rstrip())
                 agent_prefix = self.__agent_name_prefix()
+                region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
+
                 try:
                         self.__ensure_rancher_agents()
                         self.__ensure_agents_docker()
