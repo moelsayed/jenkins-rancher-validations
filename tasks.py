@@ -174,6 +174,6 @@ ns.add_collection(rs)
 
 ra = Collection('rancher_agents')
 ra.add_task(rancher_agents_provision, 'provision')
-ra.add_task(rancher_agents_provision_standalone, 'provisionstandalone')
 ra.add_task(rancher_agents_deprovision, 'deprovision')
+ra.add_task(rancher_agents_provision_standalone, 'provisionstandalone')
 ns.add_collection(ra)
