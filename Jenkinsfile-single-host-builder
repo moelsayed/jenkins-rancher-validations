@@ -70,12 +70,12 @@ try {
           "rancherlabs/ci-validation-tests /bin/bash -c \'cd \"\$(pwd)\" && invoke syntax\'"
       }
 
-//      stage ('lint') {
-//        sh "docker run --rm  " +
-//          "-v jenkins_home:/var/jenkins_home " +
-//          "rancherlabs/ci-validation-tests /bin/bash -c \'cd \"\$(pwd)\" && invoke lint\'"
-//      }
-//
+      stage ('lint') {
+        sh "docker run --rm  " +
+          "-v jenkins_home:/var/jenkins_home " +
+          "rancherlabs/ci-validation-tests /bin/bash -c \'cd \"\$(pwd)\" && invoke lint\'"
+      }
+
       stage ('configure .env file') {
         withEnv(["RANCHER_ORCHESTRATION=StandAlone", "RANCHER_VERSION=SA", "RANCHER_SERVER_OPERATINGSYSTEM=${RANCHER_AGENT_OPERATINGSYSTEM}"]) {
           sh "./scripts/configure.sh"
