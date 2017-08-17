@@ -90,7 +90,6 @@ try {
       }
 
       if ( "false" == "${PIPELINE_DEPROVISION_STOP}" ) {
-      
          stage ('provision Standalone Rancher Agents') {
             sh "docker run --rm  " +
               "-v jenkins_home:/var/jenkins_home " +
